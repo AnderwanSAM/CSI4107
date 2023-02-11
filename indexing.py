@@ -6,6 +6,8 @@ import operator as op
 from map_documents import map_documents
 # from preprocessing import process_files, get_files
 from preprocessing import process_files, get_files
+import math
+
 
 def read_file(file_name): 
     f = open(file_name,"r")
@@ -40,9 +42,20 @@ def get_files(folder_path):
     files = os.listdir(folder_path) 
     return files
 
+def create_idf(inverted_index):
+    numofDocuments = 79923
+    idf_values = {}
+    for key in inverted_index : 
+        idf_values[key] = math.log2(numofDocuments/ len(inverted_index[key]))
+    return idf_values
+
+
 files = get_files("./coll")
 files_names = list(map(lambda x: "./coll/" + x, files))
-print(produce_index(files_names))
 
 
 # print(produce_index(["./coll/AP880212"]))
+
+inverted_index = produce_index(files_names)
+idf_values = create_idf(inverted_index)
+print(idf_values)
