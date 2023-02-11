@@ -23,20 +23,18 @@ def get_tokens():
 # print(process_files(files_names))
 def produce_index (files_names): 
     inverted_index = {}
-    final_index = {}
     # get list of unique terms (list of tokens)
     tokens = get_tokens()
     # add tokens as keys for the inverted index 
     for token in tokens:
-        inverted_index[token] = []
+        inverted_index[token] = {}
     for file in files_names : 
         mapped_documents = map_documents(file)
         for key in mapped_documents : 
             for term in mapped_documents[key]: 
                 if term in inverted_index : 
-                    # inverted_index[term].append((key,op.countOf(mapped_documents[key],term)))
-                    inverted_index[term].append((  key , mapped_documents[key].count(term)))
-    return inverted_index
+                    inverted_index[term][key] = mapped_documents[key].count(term)
+    return inverted_index, mapped_documents
 
 def get_files(folder_path):
     files = os.listdir(folder_path) 
@@ -50,12 +48,11 @@ def create_idf(inverted_index):
     return idf_values
 
 
-files = get_files("./coll")
-files_names = list(map(lambda x: "./coll/" + x, files))
+# files = get_files("./coll")
+# files_names = list(map(lambda x: "./coll/" + x, files))
+# # print (produce_index(files_names))
+# # print(produce_index(["./coll/AP880212"]))
 
-
-# print(produce_index(["./coll/AP880212"]))
-
-inverted_index = produce_index(files_names)
-idf_values = create_idf(inverted_index)
-print(idf_values)
+# inverted_index = produce_index(files_names)
+# idf_values = create_idf(inverted_index)
+# print(idf_values)
