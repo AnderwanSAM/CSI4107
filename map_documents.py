@@ -32,8 +32,11 @@ def remove_stopwords(tokens):
     with open("StopWords.txt") as f:
         stopwords= f.readlines()
     stopwords = [x.strip() for x in stopwords]
-    tokens= set(tokens) - set(stopwords)
-    tokens = sorted(list(tokens))
+    final_tokens = []
+    for token in tokens : 
+        if token in stopwords: 
+            continue 
+        final_tokens.append(token)
     return tokens
     
 def process_document(string_doc):
@@ -41,12 +44,8 @@ def process_document(string_doc):
     tokenized_text = tokenize_string(text_without_numbers)
     tokenized_text_lower = []
     for x in tokenized_text : 
-        tokenized_text_lower.append(x.lower)
-    # tokenized_text_lower = list(map(lambda x: x.lower(), tokenized_text))  #convert to lower case 
-    #remove stop words
-    print(tokenized_text_lower)
+        tokenized_text_lower.append(x.lower())
     return_value = remove_stopwords(tokenized_text_lower)
-    # print(type(return_value))
     return return_value
 
 
@@ -61,9 +60,6 @@ def map_documents(file_name):
         document_number = document_number.replace(" ", "") #remove white space from DOCNO
         extracted_text = extract_text(doc)
         processed_document = process_document( extracted_text )
-        # if (document_number == "AP880212-0001") : 
-        #     print(extracted_text)
-        #     print(processed_document)
         docs[document_number] = processed_document
     return docs
     
@@ -71,6 +67,6 @@ def get_files(folder_path):
     files = os.listdir(folder_path) 
     return files
 
-doc_map = map_documents("./coll/AP880212")
+# doc_map = map_documents("./coll/AP880212")
 
 # print(doc_map["AP880212-0001"])

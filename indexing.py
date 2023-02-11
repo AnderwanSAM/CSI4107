@@ -33,16 +33,16 @@ def produce_index (files_names):
             for term in mapped_documents[key]: 
                 if term in inverted_index : 
                     # inverted_index[term].append((key,op.countOf(mapped_documents[key],term)))
-                    inverted_index[term].append(  (  key , mapped_documents[key].count(term)))
+                    inverted_index[term].append((  key , mapped_documents[key].count(term)))
     return inverted_index
 
 def get_files(folder_path):
     files = os.listdir(folder_path) 
     return files
 
-# files = get_files("./coll")
-# files_names = list(map(lambda x: "./coll/" + x, files))
-# print(produce_index(files_names))
+files = get_files("./coll")
+files_names = list(map(lambda x: "./coll/" + x, files))
+print(produce_index(files_names))
 
 
-print(produce_index(["./coll/AP880212"]))
+# print(produce_index(["./coll/AP880212"]))
