@@ -37,7 +37,7 @@ def remove_stopwords(tokens):
         if token in stopwords: 
             continue 
         final_tokens.append(token)
-    return tokens
+    return final_tokens
     
 def process_document(string_doc):
     text_without_numbers = re.sub(r'\d+', '', string_doc)
