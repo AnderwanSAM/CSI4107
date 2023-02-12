@@ -20,5 +20,4 @@
 ## Mean Average Precision (MAP)
 
 
-Go through all files, extract each document.
-Create a dictionary that has documentID as key and Text as value
+length(inverted index)
