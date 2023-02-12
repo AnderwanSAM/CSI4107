@@ -37,5 +37,5 @@ doc_files_names = list(map(lambda x: "./coll/" + x, doc_files))
 
 inverted_index, documents, max_frequency = produce_index(doc_files_names)
 idf_values= create_idf(inverted_index)
-query_tf_idf=(query_tf_idf(query, idf_values))
-print(query_length(query_tf_idf))
+q_tf_idf=(query_tf_idf(query, idf_values))
+# print(query_length(q_tf_idf))

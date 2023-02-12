@@ -37,18 +37,29 @@ def doc_length(doc_tf_idf):
 # tf_idf=calculate_tf_idf(documents, inverted_index,idf_values)
 # print (tf_idf)
 
-def calc_cosSim(doc_tf_idf, query_tf_idf, doc_length, query_length):
+def calc_cosSim(doc_tf_idf, q_tf_idf, doc_len, query_len):
     cosSim={}
     sum=0
     for docNo in doc_tf_idf: 
-        for token in doc_tf_idf:
-            if token in query_tf_idf.keys():
-                sum= sum+ (query_tf_idf[token] * doc_tf_idf[docNo][token])
-        cosSim[docNo]= sum/ (doc_length[docNo] * query_length)
+        for token in doc_tf_idf[docNo]:
+            if token in q_tf_idf.keys():
+                # print("boo")
+                sum= sum+ (q_tf_idf[token] * doc_tf_idf[docNo][token])
+        cosSim[docNo]= sum/ (doc_len[docNo] * query_len)
+        # print(sum)
         sum=0
-    return cosSim
+    return dict(sorted(cosSim.items(), key=lambda x: x[1], reverse=True))
 
 inverted_index, documents, max_frequency = produce_index(["./coll/AP880212"])
 idf_values= create_idf(inverted_index)
-tf_idf=calculate_tf_idf(documents, inverted_index,idf_values, max_frequency)
-# print(doc_length(tf_idf))
+doc_tf_idf=calculate_tf_idf(documents, inverted_index,idf_values, max_frequency)
+doc_len= doc_length(doc_tf_idf)
+
+query_files = read_file("test_query.txt")
+query= extract_query(query_files)
+q_tf_idf=query_tf_idf(query, idf_values)
+query_len= query_length(q_tf_idf)
+
+print(calc_cosSim(doc_tf_idf, q_tf_idf, doc_len, query_len))
+
+
