@@ -95,7 +95,7 @@ If you tested with 1 query before,
 3. Run `python retrieval.py` 
 
 If you did $not$ test with 1 query before, 
-    1. Run `python retrieval.py`
+1. Run `python retrieval.py`
 
 The results will be stored at `Results.txt`
 
