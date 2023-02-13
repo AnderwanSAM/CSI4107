@@ -83,54 +83,70 @@ def write_to_file(topicNo,results):
         with open("Results.txt", "a") as file:
             print(to_print, file=file)
         count += 1 
+        
+# function to get the idf values and document tf-idf scores and store in separate files 
+def get_doc_tf_idf(inverted_index,documentsNumbers,documents_max_frequency):
+    print("-------- Calculate idf values : STARTING ----------")
+    # calculate idf values 
+    idf_values= create_idf(inverted_index)
 
-print("-------- Reading inverted_index, documentsNumbers and max frequencies from file : STARTING ----------")
-# Read the list back from the file
-with open("./cached/inverted_index.json", "r") as f:
-    inverted_index = json.load(f)
+    # Write the list to the file 
+    with open("./cached/idf_values.json", "w") as file:
+        json.dump(idf_values, file)
+        
+    print("-------- Calculate idf values : DONE ----------")
+    print("-------- Calculate document tf idf values : STARTING ----------")
+    #calculate document tf idf 
+    doc_tf_idf=calculate_tf_idf(documentsNumbers, inverted_index,idf_values, documents_max_frequency)
 
-with open("./cached/documentsNumbers.json", "r") as f:
-    documentsNumbers = json.load(f)
+    #Write document tf idf to the file 
+    with open("./cached/document_tf_idf.json", "w") as file:
+        json.dump(doc_tf_idf, file)
 
-with open("./cached/documents_max_frequency.json", "r") as f:
-    documents_max_frequency= json.load(f)
-
-print("-------- Reading inverted_index, documentsNumbers and max frequencies from file : DONE ----------")
-print("-------- Calculate idf values : STARTING ----------")
-# calculate idf values 
-idf_values= create_idf(inverted_index)
-
-# Write the list to the file 
-with open("./cached/idf_values.json", "w") as file:
-    json.dump(idf_values, file)
+def main():
     
-print("-------- Calculate idf values : DONE ----------")
-print("-------- Calculate document tf idf values : STARTING ----------")
-#calculate document tf idf 
-doc_tf_idf=calculate_tf_idf(documentsNumbers, inverted_index,idf_values, documents_max_frequency)
+    print("-------- Reading files : STARTING ----------")
+    # Read the list back from the file
+    with open("./cached/inverted_index.json", "r") as f:
+        inverted_index = json.load(f)
 
-#Write document tf idf to the file 
-with open("./cached/document_tf_idf.json", "w") as file:
-    json.dump(doc_tf_idf, file)
+    with open("./cached/documentsNumbers.json", "r") as f:
+        documentsNumbers = json.load(f)
+
+    with open("./cached/documents_max_frequency.json", "r") as f:
+        documents_max_frequency= json.load(f)
     
-print("-------- Calculate document tf idf values : DONE ----------")
-print("-------- Calculate document length : STARTING ----------")
-# calculate document length 
-doc_len= doc_length(doc_tf_idf)
+    # get_doc_tf_idf(inverted_index,documentsNumbers,documents_max_frequency) 
+    
+    with open("./cached/idf_values.json", "r") as f:
+        idf_values = json.load(f)
 
-print("-------- Read query files : STARTING ----------")
-# Read test queries from file 
-query_files = read_file("test_query.txt")
+    with open("./cached/document_tf_idf.json", "r") as f:
+        doc_tf_idf = json.load(f)
 
-print("-------- Read query files : DONE ----------")
-print("-------- Compute cosine similarity : STARTING ----------")
-# Compute cosine similarity for 1 query file 
-results=compute_cossim_iq(query_files, idf_values, 0, doc_tf_idf, doc_len)
-write_to_file((0+1),results)
+    print("-------- Reading files : DONE ----------")
+    print("-------- Calculate document length : STARTING ----------")
+    # calculate document length 
+    doc_len= doc_length(doc_tf_idf)
 
-print("-------- Read query files : DONE ----------")
+    print("-------- Calculate document length : DONE ----------")
+    print("-------- Read query files : STARTING ----------")
+    # Read test queries from file 
+    query_files = read_file("test_query.txt")
 
-#CosSim for 50 queries 
-    # for i in range (0,50) :
-    #     results=compute_cossim_iq(query_files, idf_values, i, doc_tf_idf, doc_len)
-    #     write_to_file((i+1),results)
+    print("-------- Read query files : DONE ----------")
+    # print("-------- Compute cosine similarity : STARTING ----------")
+    # Compute cosine similarity for 1 query file 
+    # results=compute_cossim_iq(query_files, idf_values, 0, doc_tf_idf, doc_len)
+    # write_to_file((0+1),results)
+
+    # print("-------- Read query files : DONE ----------")
+    print("-------- Compute cosine similarity for 50 queries : STARTING ----------")
+    #CosSim for 50 queries 
+    for i in range (0,50) :
+        print("-------- Compute cosine similarity for QUERY " + str(i+1)+ " : STARTING ----------")
+        results=compute_cossim_iq(query_files, idf_values, i, doc_tf_idf, doc_len)
+        write_to_file((i+1),results)
+        print("-------- Compute cosine similarity for QUERY " + str(i+1)+ " : DONE ----------")
+        
+    print("-------- Compute cosine similarity for 50 queries : DONE ----------")
