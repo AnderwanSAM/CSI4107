@@ -93,6 +93,7 @@ If you tested with 1 query before,
 1. Comment lines 138-143 (this calculates the cosine similarity values for 1 query and ranks them)
 2. Uncomment lines 144-152
 3. Run `python retrieval.py` 
+
 If you did $not$ test with 1 query before, 
     1. Run `python retrieval.py`
 
