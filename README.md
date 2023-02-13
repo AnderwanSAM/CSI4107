@@ -73,6 +73,7 @@ To calculate the document tf-idf :
 1. Uncomment line 119 
 2. Comment lines 121- 152 (this calculates the cosine similarity values for 50 queries and ranks them)
 3. Run `python retrieval.py` 
+
 (Note that this will take up to 2hours to run)
 
 The results will be stored at `/cached/document-tf-idf`
@@ -85,6 +86,7 @@ To test with 1 query:
 1. Uncomment lines 138-143
 2. Comment lines 144-152(this calculates the cosine similarity values for 50 queries and ranks them)
 3. Run `python retrieval.py` 
+
 The results will be stored at `Results.txt`
 
 To test with 50 queries: 
