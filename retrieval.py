@@ -150,3 +150,6 @@ def main():
         print("-------- Compute cosine similarity for QUERY " + str(i+1)+ " : DONE ----------")
         
     print("-------- Compute cosine similarity for 50 queries : DONE ----------")
+
+if __name__ == '__main__':
+    main()
