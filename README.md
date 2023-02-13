@@ -70,11 +70,9 @@ It will also create the inverted index for the indexing step stored at `/cached/
 The functions for the retrieval step can be found in the `retrieval.py` file. 
 
 To calculate the document tf-idf : 
-
 1. Uncomment line 119 
 2. Comment lines 121- 152 (this calculates the cosine similarity values for 50 queries and ranks them)
 3. Run `python retrieval.py` 
-
 (Note that this will take up to 2hours to run)
 
 The results will be stored at `/cached/document-tf-idf`
@@ -84,21 +82,17 @@ If you decide to calculate the document tf-idf again, after you're done, $don't 
 Else, you can find the calculated document tf-idf at `/cached/document-tf-idf`
 
 To test with 1 query: 
-
 1. Uncomment lines 138-143
 2. Comment lines 144-152(this calculates the cosine similarity values for 50 queries and ranks them)
 3. Run `python retrieval.py` 
-
 The results will be stored at `Results.txt`
 
 To test with 50 queries: 
 
 If you tested with 1 query before, 
-
 1. Comment lines 138-143 (this calculates the cosine similarity values for 1 query and ranks them)
 2. Uncomment lines 144-152
 3. Run `python retrieval.py` 
-
 If you did $not$ test with 1 query before, 
     1. Run `python retrieval.py`
 
