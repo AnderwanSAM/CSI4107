@@ -1,6 +1,6 @@
 # CSI4107
 
- Group #20
+## Group #20
 
 | Student Name       | Student Number|
 |--------------------|---------------|
@@ -128,7 +128,7 @@ This way, the program does not have to recalculate them since they take a lot of
 
 ### How big is the vocabulary? 
 
-The vacabulary can be found at `\cached\tokens.json`.
+The vocabulary can be found at `\cached\tokens.json`.
 
 The vocabulary is huge. The file size is 2.50MB.
 We only removed the punctuations, duplicate words and the stopwords. We did not use any stemming since it was optional. The vocabulary could have been less if we stemmed the words. 
