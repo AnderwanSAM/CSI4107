@@ -55,11 +55,14 @@ We practiced pair coding with a lead coder writing the structure of the program 
 ### Running Step1:Preprocessing and Step2:Indexing
 
 The functions for preprocessing step can be found in the `preprocessing.py` file. 
+
 The functions for indexing step can be found in the`indexing.py` file. 
 
 To run the files, you will need to run `main.py` file as follows : 
 `python main.py` 
+
 This will create a list of tokens for the preprocessing step stored at `/cached/tokens.json`
+
 It will also create the inverted index for the indexing step stored at `/cached/inverted_index.json`
 
 ### Running Step3: Retrieval and Ranking
@@ -67,10 +70,13 @@ It will also create the inverted index for the indexing step stored at `/cached/
 The functions for the retrieval step can be found in the `retrieval.py` file. 
 
 To calculate the document tf-idf : 
-    1. Uncomment line 119 
-    2. Comment lines 121- 152 (this calculates the cosine similarity values for 50 queries and ranks them)
-    3. Run `python retrieval.py` 
+
+1. Uncomment line 119 
+2. Comment lines 121- 152 (this calculates the cosine similarity values for 50 queries and ranks them)
+3. Run `python retrieval.py` 
+
 (Note that this will take up to 2hours to run)
+
 The results will be stored at `/cached/document-tf-idf`
  
 If you decide to calculate the document tf-idf again, after you're done, $don't forget$ to comment line 199 and uncomment lines 121-152 !!!
@@ -78,18 +84,24 @@ If you decide to calculate the document tf-idf again, after you're done, $don't 
 Else, you can find the calculated document tf-idf at `/cached/document-tf-idf`
 
 To test with 1 query: 
-    1. Uncomment lines 138-143
-    2. Comment lines 144-152(this calculates the cosine similarity values for 50 queries and ranks them)
-    3. Run `python retrieval.py` 
+
+1. Uncomment lines 138-143
+2. Comment lines 144-152(this calculates the cosine similarity values for 50 queries and ranks them)
+3. Run `python retrieval.py` 
+
 The results will be stored at `Results.txt`
 
 To test with 50 queries: 
-    If you tested with 1 query before, 
-        1. Comment lines 138-143 (this calculates the cosine similarity values for 1 query and ranks them)
-        2. Uncomment lines 144-152
-        3. Run `python retrieval.py` 
-    If you did $not$ test with 1 query before, 
-        1. Run `python retrieval.py`
+
+If you tested with 1 query before, 
+
+1. Comment lines 138-143 (this calculates the cosine similarity values for 1 query and ranks them)
+2. Uncomment lines 144-152
+3. Run `python retrieval.py` 
+
+If you did $not$ test with 1 query before, 
+    1. Run `python retrieval.py`
+
 The results will be stored at `Results.txt`
 
 ## Explanations of algorithms, data structures and optimization
@@ -106,9 +118,9 @@ To produce the inverted index, we used the concept of dictionaries where each ke
 ![inverted index](/assets/inverted_index_example.png)
 
 The function `produce_index(files_names)` uses 3 nested for loops: 
-    1. To iterate through all the files in the collection
-    2. To iterate through all the documents in each file 
-    3. To iterate through each term in each document 
+1. To iterate through all the files in the collection
+2. To iterate through all the documents in each file 
+3. To iterate through each term in each document 
                 
 ### Step3 : Retrieval and Ranking
 
@@ -121,8 +133,8 @@ This way, the program does not have to recalculate them since they take a lot of
 
 The vacabulary can be found at `\cached\tokens.json`.
 
-The vocabulary is huge. The file size is 2.50MB
-We only removed the punctuations, duplicate words and the stopwords. We did not use any stemming sicne it was optional. The vocabulary could have been less if we stemmed the words. 
+The vocabulary is huge. The file size is 2.50MB.
+We only removed the punctuations, duplicate words and the stopwords. We did not use any stemming since it was optional. The vocabulary could have been less if we stemmed the words. 
 
 ### Sample of 100 tokens 
 
@@ -166,5 +178,7 @@ We only removed the punctuations, duplicate words and the stopwords. We did not 
 ## References 
 
  Remove Duplicates: https://www.w3schools.com/python/python_howto_remove_duplicates.asp
+
  chatGPT : https://chat.openai.com/chat 
+
  Week2 slides : https://www.site.uottawa.ca/~diana/csi4107/L3.pdf 
