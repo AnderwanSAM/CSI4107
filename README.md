@@ -84,7 +84,7 @@ import nltk
 #call the nltk downloader
 nltk.download('punkt')
 ```
-![nltk](/assets/nltk.png)
+![nltk](https://github.com/AnderwanSAM/CSI4107/blob/step4-extended-plus-stemming/assets/nltk.png)
  
 OR 
 
