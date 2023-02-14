@@ -1,7 +1,7 @@
 from preprocessing import *
 import math
 
-# title and descrition 
+# Extract title and descrition in a query 
 def extract_query(query,count):
     pattern = re.compile(r'<title>(.*?)<narr>', re.DOTALL) # extract the content between title and narr
     matches = pattern.findall(query)
@@ -16,7 +16,7 @@ def extract_query(query,count):
     no_stopwords_q= remove_stopwords(final_query)
     return no_stopwords_q
 
-# just for the title 
+# Extract the title in a query
 # def extract_query(query,count):
 #     pattern = re.compile(r'<title>(.*?)<desc>', re.DOTALL)
 #     matches = pattern.findall(query)
@@ -28,12 +28,19 @@ def extract_query(query,count):
 #     no_stopwords_q= remove_stopwords(final_query)
 #     return no_stopwords_q
 
+def query_tf(query):
+    query_tf={}
+    for token in query:
+        if token in query_tf.keys():
+            continue 
+        query_tf[token]= query.count(token)
+    return query_tf
 
-def query_tf_idf(query, idf_values):
+def query_tf_idf(query_tf, idf_values):
     query_token={}
-    for token in query: 
+    for token in query_tf: 
         if token in idf_values.keys():
-            query_token[token] = idf_values[token]
+            query_token[token] = (query_tf[token] / max(query_tf.values())) * idf_values[token]
     return query_token
 
 def query_length(query_tf_idf):
@@ -89,13 +96,13 @@ def calc_cosSim(doc_tf_idf, q_tf_idf, doc_len, query_len):
 
 def compute_cossim_iq(query_files, idf_values,count,doc_tf_idf, doc_len) : 
     query= extract_query(query_files,count)  #returns a list of words for a given query
-    q_tf_idf=query_tf_idf(query, idf_values) #calculates tf_idf of the query
+    q_tf= query_tf(query)                  #returns a list with tf for each word in a query 
+    q_tf_idf=query_tf_idf(q_tf, idf_values) #calculates tf_idf of the query
     query_len= query_length(q_tf_idf)        #calculates the length of the query 
     results=calc_cosSim(doc_tf_idf, q_tf_idf, doc_len, query_len)  #calculates cosine Similarity with 1 query and the collection of documents (key: DocNo value: casine similarity)
     return results
 
 def write_to_file(topicNo,results):
-    # {'AP880212-0062': 0.009771322815600376, 'AP880212-0108': 0.0014723630652527925}
     count = 1
     for docNo in results:   
         to_print = str(topicNo) + " Q0 " + str(docNo) + " " + str(count) + " " + str(results[docNo]) + " " + "testTag"
@@ -154,7 +161,7 @@ def main():
     # Read test queries from file 
     query_files = read_file("test_query.txt")
     
-    print(extract_query(query_files,0))
+    
     print("-------- Read query files : DONE ----------")
     # print("-------- Compute cosine similarity : STARTING ----------")
     # Compute cosine similarity for 1 query file 
