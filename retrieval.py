@@ -4,7 +4,8 @@ import math
 def extract_query(query,count):
     pattern = re.compile(r'<title>(.*?)<desc>', re.DOTALL)
     matches = pattern.findall(query)
-    first_query=matches[count].split()
+    first_query = stemSentence(matches[count])
+    first_query=first_query.split()
     final_query = []
     for x in first_query : 
         final_query.append(x.lower())
@@ -121,6 +122,7 @@ def main():
     with open("./cached/idf_values.json", "r") as f:
         idf_values = json.load(f)
 
+
     with open("./cached/document_tf_idf.json", "r") as f:
         doc_tf_idf = json.load(f)
 
@@ -133,7 +135,7 @@ def main():
     print("-------- Read query files : STARTING ----------")
     # Read test queries from file 
     query_files = read_file("test_query.txt")
-
+    
     print("-------- Read query files : DONE ----------")
     # print("-------- Compute cosine similarity : STARTING ----------")
     # Compute cosine similarity for 1 query file 

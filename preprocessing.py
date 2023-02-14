@@ -2,6 +2,8 @@ import re
 import string
 import os
 import json
+from nltk.stem import PorterStemmer
+from nltk.tokenize import sent_tokenize, word_tokenize
 
 def get_files(folder_path):
     files = os.listdir(folder_path) 
@@ -24,6 +26,16 @@ def tokenize_string(str):
     return_value = [str.split()]
     return return_value[0]
 
+def stemSentence(sentence):
+    porter = PorterStemmer()
+    token_words=  word_tokenize(sentence) # Using it here only as it doesn't produce the same exact result as my other function that I cannot use here
+    token_words
+    stem_sentence=[]
+    for word in token_words:
+        stem_sentence.append(porter.stem(word))
+        stem_sentence.append(" ")
+    return  "".join(stem_sentence)
+
 def process_files (files):
     extracted_text = ""
     for file_name in files :  
@@ -31,7 +43,8 @@ def process_files (files):
         extracted_text += extract_text(file_content)
     # remove numbers
     text_without_numbers = re.sub(r'\d+', '', extracted_text)
-    tokenized_text = tokenize_string(text_without_numbers)
+    text_stemmed = stemSentence(text_without_numbers) # stem the text
+    tokenized_text = tokenize_string(text_stemmed)
     tokenized_text_lower = list(map(lambda x: x.lower(), tokenized_text))  #convert to lower case 
     # remove duplicate words: https://www.w3schools.com/python/python_howto_remove_duplicates.asp
     text_no_duplicate  = list(dict.fromkeys(tokenized_text_lower))

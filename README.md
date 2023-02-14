@@ -52,6 +52,32 @@ We practiced pair coding with a lead coder writing the structure of the program 
 
 ## How to run the programs 
 
+### Requirements
+
+NLTK is required to run certain functions.
+
+
+
+NLTK requires Python versions 2.7, 3.4, 3.5, or 3.6. You can install nltk using pip installer if it is not installed in your Python installation. 
+
+`pip install nltk`
+
+To test the installation: 
+
+open your Python IDE or the CLI interface (whichever you use normally)
+Type import nltk and press enter if no message of missing nltk is shown then nltk is installed on your computer.
+
+After installation, nltk also provides test datasets to work within Natural Language Processing. You can download it by using the following commands in Python:
+
+```
+#import the nltk package
+import nltk
+#call the nltk downloader
+nltk.download()
+```
+
+From the GUI that appears, Click on Models tab and select punkt and click Download. This is the only model needed for this project. 
+
 ### Running Step1:Preprocessing and Step2:Indexing
 
 The functions for preprocessing step can be found in the `preprocessing.py` file. 
@@ -179,3 +205,5 @@ We only removed the punctuations, duplicate words and the stopwords. We did not 
  chatGPT : https://chat.openai.com/chat 
 
  Week2 slides : https://www.site.uottawa.ca/~diana/csi4107/L3.pdf 
+
+ Stemming : https://www.datacamp.com/tutorial/stemming-lemmatization-python

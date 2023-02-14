@@ -21,7 +21,8 @@ def extract_document_number(document):
 # Returns a list with all the words in the document (without stopwords but still containing duplicates)
 def process_document(string_doc):
     text_without_numbers = re.sub(r'\d+', '', string_doc)
-    tokenized_text = tokenize_string(text_without_numbers)
+    text_stemmed = stemSentence(text_without_numbers) # stem the text
+    tokenized_text = tokenize_string(text_stemmed)
     tokenized_text_lower = []
     for x in tokenized_text : 
         tokenized_text_lower.append(x.lower())
