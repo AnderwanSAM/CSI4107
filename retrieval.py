@@ -1,16 +1,33 @@
 from preprocessing import *
 import math
 
+# title and descrition 
 def extract_query(query,count):
-    pattern = re.compile(r'<title>(.*?)<desc>', re.DOTALL)
+    pattern = re.compile(r'<title>(.*?)<narr>', re.DOTALL) # extract the content between title and narr
     matches = pattern.findall(query)
-    first_query = stemSentence(matches[count])
+    to_stem = matches[count].replace("<desc>","") # remove desc tag
+    translate_table = to_stem.maketrans('', '', string.punctuation)
+    no_punct_to_stem = to_stem.translate(translate_table)
+    first_query = stemSentence(no_punct_to_stem)
     first_query=first_query.split()
     final_query = []
     for x in first_query : 
         final_query.append(x.lower())
     no_stopwords_q= remove_stopwords(final_query)
     return no_stopwords_q
+
+# just for the title 
+# def extract_query(query,count):
+#     pattern = re.compile(r'<title>(.*?)<desc>', re.DOTALL)
+#     matches = pattern.findall(query)
+#     first_query = stemSentence(matches[count])
+#     first_query=first_query.split()
+#     final_query = []
+#     for x in first_query : 
+#         final_query.append(x.lower())
+#     no_stopwords_q= remove_stopwords(final_query)
+#     return no_stopwords_q
+
 
 def query_tf_idf(query, idf_values):
     query_token={}
@@ -55,6 +72,7 @@ def doc_length(doc_tf_idf):
         for token in doc_tf_idf[docNo]:
             length= length + doc_tf_idf[docNo][token]**2
         length_doc[docNo]= math.sqrt(length)
+        length=0
     return length_doc
 
 def calc_cosSim(doc_tf_idf, q_tf_idf, doc_len, query_len):
@@ -136,6 +154,7 @@ def main():
     # Read test queries from file 
     query_files = read_file("test_query.txt")
     
+    print(extract_query(query_files,0))
     print("-------- Read query files : DONE ----------")
     # print("-------- Compute cosine similarity : STARTING ----------")
     # Compute cosine similarity for 1 query file 

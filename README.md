@@ -21,6 +21,7 @@ We practiced pair coding with a lead coder writing the structure of the program 
 * `read_file(file_name)` gets the file names using `get_files(folder_path)` function, opens the document file and reads the content into a string  
 * `extract_text(documents)` takes in each document and extracts what is between the `<TEXT>` tags
 * `tokenize_string(str)` converts the extracted text into a list of it's constituent words (list of tokens)
+* `stemSentence(sentence)` stems a sentence using PorterStemmer from the Nltk library and returns it
 * `process_files(files)` goes through all the documents, removes all numbers, all occurences of stop words(using the `remove_stopwords(tokens)` function) and all duplicates of the same word
 * `remove_stopwords(tokens)` removes all stopwords from the tokens list 
 * `get_files_names(folder_path)` gets a folder path and returns a list containing all the files names 
