@@ -86,8 +86,9 @@ import nltk
 nltk.download('punkt')
 ```
 or using this process
-![nltk](https://raw.githubusercontent.com/AnderwanSAM/CSI4107/step4-extended-plus-stemming/assets/nltk.png?token=GHSAT0AAAAAAB6CUSUJ2ZEAGRR2OQYQWGWMY7MDHGA)
- 
+
+![nltk](https://raw.githubusercontent.com/ishanveersg/ishanveer.com/main/nltk.png)
+
 You could also, just type in the python interpreter 
 `import nltk`
 then 
@@ -162,7 +163,7 @@ After, the duplicates are removed, the tokens are then linted to remove the stop
 
 To produce the inverted index, we used the concept of dictionaries where each key is a term and the value is another dictionary with documents numbers as keys and term frequencies as values. 
 
-![inverted index](https://github.com/AnderwanSAM/CSI4107/blob/step4-extended-plus-stemming/assets/inverted_index_example.png)
+![inverted index](https://raw.githubusercontent.com/ishanveersg/ishanveer.com/main/inverted_index_example.png)
 
 The function `produce_index(files_names)` uses 3 nested for loops: 
 1. To iterate through all the files in the collection
@@ -281,11 +282,11 @@ This might be because using the query title and description gives a larger vocab
 
 The Mean Average Precision when using the query title only is 0.2159
 
-![Results using query title only](https://github.com/AnderwanSAM/CSI4107/blob/step4-extended-plus-stemming/assets/results_title.png)
+![Results using query title only](https://raw.githubusercontent.com/ishanveersg/ishanveer.com/main/results_title.png)
 
 The Mean Average Precision when using the query title and description is 0.2368
 
-![Results using query title and description](https://github.com/AnderwanSAM/CSI4107/blob/step4-extended-plus-stemming/assets/results_title_desc.png)
+![Results using query title and description](https://raw.githubusercontent.com/ishanveersg/ishanveer.com/main/results_title_desc.png)
 
 We can see that the MAP is better when using the query title and description than just using the title. This may be because the vocabulary is bigger using the description as well and thus there are more similarities between the collection of documents and the query. 
 
