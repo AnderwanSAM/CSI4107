@@ -11,7 +11,7 @@
 ### How tasks were divided 
 
 The three of us worked on the assignment all together during scheduled timeslots. 
-Since all the steps were dependent on the preceding steps (i.e step 2 is dependent on step1 etc..), we thought it'll be better to work on it together so that we all understand the assignment in the same way. We practiced pair coding with a lead coder writing the structure of the program and the others creating the supporting functions.
+Since all the steps were dependent on the preceding steps (i.e step 2 is dependent on step1 etc..), we thought it'll be better to work on it together so that we all understand the assignment in the same way. We practiced pair coding with a lead coder writing the structure of the program and the others creating the supporting functions and reviewing the code. We each took turns being the lead coder. 
 
 ## Note about the functionality of programs 
 
@@ -72,9 +72,10 @@ NLTK requires Python versions 2.7, 3.4, 3.5, or 3.6. You can install nltk using 
 To test the installation: 
 
 Open your Python IDE or the CLI interface (whichever you use normally)
-Type import nltk and press enter if no message of missing nltk is shown then nltk is installed on your computer.
+Type `import nltk` and press enter.
+If no message of missing nltk is shown then nltk is installed on your computer.
 
-After installation, nltk also provides test datasets to work within Natural Language Processing. 
+After installation, nltk also provides test datasets to work within Natural Language Processing. One of them (punkt) is used in this project
 
 You can download it by using the following commands in Python:
 
@@ -84,13 +85,18 @@ import nltk
 #call the nltk downloader
 nltk.download('punkt')
 ```
+or using this process
 ![nltk](https://raw.githubusercontent.com/AnderwanSAM/CSI4107/step4-extended-plus-stemming/assets/nltk.png?token=GHSAT0AAAAAAB6CUSUJ2ZEAGRR2OQYQWGWMY7MDHGA)
  
-OR 
-
+You could also, just type in the python interpreter 
+`import nltk`
+then 
+`nltk.download()`
 From the GUI that appears, Click on Models tab and select punkt and click Download.
 
 ### Running Step1:Preprocessing and Step2:Indexing
+
+(Note that you do not need to run `Step1:Preprocessing and Step2:Indexing` before running Step3 since we already provided the files need at `/cached` )
 
 The functions for preprocessing step can be found in the `preprocessing.py` file. 
 
@@ -104,8 +110,6 @@ This will create a list of tokens for the preprocessing step stored at `/cached/
 It will also create the inverted index for the indexing step stored at `/cached/inverted_index.json`
 
 ### Running Step3: Retrieval and Ranking
-
-(Note that you do not need to run `Step1:Preprocessing and Step2:Indexing` before running Step3 since we already provided the files need at `/cached` )
 
 The functions for the retrieval step can be found in the `retrieval.py` file. 
 
@@ -145,8 +149,14 @@ The results will be stored at `Results.txt`
 
 ### Step1 : Preprocessing 
 
-In the preprocessing step, we mainly used the concept of lists to store the tokens (bag of words). We also used map to convert all the tokens to lowercase. 
-We also used dict to remove all the duplicates. To do so, the list with duplicates would be converted to a dictionary with the list items as keys. This will automatically remove any duplicates since dictionaries connot have duplicate keys.
+In the preprocessing step, we created an algotithms that produces a list of unique tokens based on the content of all the files provided. 
+The files are supplied to the program functions that will read them, extract their content and process them. 
+The processing first step consist of removing the numbers, punctuations and special characters. 
+The result is stemmed (using the nltk porter stemmer ) then tokenized. 
+The resulting tokens are then all converted to lower case then processed to remove the duplicates. 
+The duplicates are removed using the list and dictionary properties in python.
+After, the duplicates are removed, the tokens are then linted to remove the stopwords. 
+
 
 ### Step2 : Indexing
 
@@ -158,7 +168,14 @@ The function `produce_index(files_names)` uses 3 nested for loops:
 1. To iterate through all the files in the collection
 2. To iterate through all the documents in each file 
 3. To iterate through each term in each document 
-                
+
+The algorithm is as follow : 
+
+- For each token in the vocabulary, create a key in the inverted index
+- For each file supplied, map the documents ( create a dictionary with the document number as key and its content as value)
+- For each document mapped, if its contents is not empty, find the most frequent word and count its frequency. 
+- for each term in the mapped document content, confirm that it is a key of the inverted index (a token of the vocabulary) and update the count for it in the inverted index
+            
 ### Step3 : Retrieval and Ranking
 
 In this step, we also use a lot of list and dictionaries to store idf values, query and document lengths, document tf idf etc...

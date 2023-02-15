@@ -168,7 +168,7 @@ def main():
     # results=compute_cossim_iq(query_files, idf_values, 0, doc_tf_idf, doc_len)
     # write_to_file((0+1),results)
 
-    # print("-------- Read query files : DONE ----------")
+    # print("-------- Compute cosine similarity : DONE ----------")
     print("-------- Compute cosine similarity for 50 queries : STARTING ----------")
     #CosSim for 50 queries 
     for i in range (0,50) :
