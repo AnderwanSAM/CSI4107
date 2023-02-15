@@ -43,7 +43,7 @@ For the indexing, we used the tokens from the preprocessing step to create the i
 
 ### Part 3: Retrieval and Ranking
 
- In the retrieval step, we first calculated the document tf-idf and document lengths. Then, for each query, we extracted the title/title and description. Then we removed all punctuations, added synonymes to the list, stemmed the tokens and removed all the stopwords.We then calculated the query length and tf-idf values and then computed the cosine similarity between the query and the collection of documents. For the 50 test queries, the results are stored in `Results.txt` sorted by descending order and grouped by query number.
+ In the retrieval step, we first calculated the document tf-idf and document lengths. Then, for each query, we extracted the title/title and description. Then we removed all punctuations, stemmed the tokens and removed all the stopwords.We then calculated the query length and tf-idf values and then computed the cosine similarity between the query and the collection of documents. For the 50 test queries, the results are stored in `Results.txt` sorted by descending order and grouped by query number.
 
 **Functions: retrieval.py** 
 * `extract_query(query,count)`  returns the tokens for a specific query. Note that there are 2 implementation of `extract_query(query,count)`. One to extract the tile only and one to extract the title and the description.
@@ -71,7 +71,7 @@ NLTK requires Python versions 2.7, 3.4, 3.5, or 3.6. You can install nltk using 
 
 To test the installation: 
 
-open your Python IDE or the CLI interface (whichever you use normally)
+Open your Python IDE or the CLI interface (whichever you use normally)
 Type import nltk and press enter if no message of missing nltk is shown then nltk is installed on your computer.
 
 After installation, nltk also provides test datasets to work within Natural Language Processing. 
@@ -216,7 +216,7 @@ This means that there are more words in common between query 25 and the collecti
 
 ### First 10 answers to query 1 and 25 (Using query title and description )
 
-When comparing the results for the first 10 answers tio query 1 and query 25 using the query title and description, we can see that query 25's cosine similarities are higgher than query 1's cosine similarities. However, they do not differ by much as compared to the comparison for the query title only. This might be because using the query title and description gives a larger vocabulariy, thus there might be more similarities between query 1 and query 25 than when using the title only. 
+When comparing the results for the first 10 answers for query 1 and query 25 using the query title and description, we can see that query 25's cosine similarities are higher than query 1's cosine similarities. However, they do not differ by much as compared to the comparison for the query title only. This might be because using the query title and description gives a larger vocabulary, thus there might be more similarities between query 1 and query 25 than when using the title only. 
 
 **First 10 answers to query 1**
 
