@@ -22,13 +22,12 @@ def merge_files(folder_path: str, output_file: str):
                 with open(file_path) as infile:
                     outfile.write(infile.read())
 
-def get_embedding(text):
-    input_ids = tokenizer.encode(text, return_tensors='pt', max_length=512, truncation=True)
+def get_embedding(texts):
+    input_ids = tokenizer(texts, return_tensors='pt', max_length=512, truncation=True, padding=True).input_ids
     input_ids = input_ids.to(device)
     with torch.no_grad():
         outputs = model(input_ids)
-    last_hidden_states = outputs[0]
-    last_hidden_states = last_hidden_states.to(device)
+    last_hidden_states = outputs.last_hidden_state
     return last_hidden_states[:, 0, :]
 
 def read_file(file_name): 
@@ -81,9 +80,9 @@ def stem_text(docs):
 
 # Read from the files and extract text
 
-merge_files('coll', 'AP_merged')
+merge_files('coll', 'AP_merged_fast')
 queries = read_file("queries")
-file_content = read_file('AP_merged')
+file_content = read_file('AP_merged_fast')
 doc_text, docnos = extract_docs(file_content)
 extracted_queries = extract_query_desc_title(queries)
 
@@ -91,23 +90,25 @@ extracted_queries = extract_query_desc_title(queries)
 doc_text = remove_stopwords(doc_text)
 queries = remove_stopwords(extracted_queries)
 
-# Stem documents and queries
-doc_text = stem_text(doc_text)
-queries = stem_text(extracted_queries)
-
+batch_size = 32
 all_results = []
 
 for i, query in enumerate(queries):
     query_embedding = get_embedding(query)
     results = []
-    for docno, doc in tqdm(zip(docnos, doc_text), total=len(doc_text), desc='Calculating cosine similarity'):
-        doc_embedding = get_embedding(doc)
-        similarity = F.cosine_similarity(query_embedding, doc_embedding, dim=-1)
-        results.append((docno, similarity.item()))
+    num_batches = len(doc_text) // batch_size + 1
+    for batch_idx in tqdm(range(num_batches), desc='Calculating cosine similarity'):
+        start_idx = batch_idx * batch_size
+        end_idx = min(start_idx + batch_size, len(doc_text))
+        doc_batch = doc_text[start_idx:end_idx]
+        docno_batch = docnos[start_idx:end_idx]
+        doc_embeddings = get_embedding(doc_batch)
+        similarities = F.cosine_similarity(query_embedding.unsqueeze(0), doc_embeddings, dim=-1)
+        results.extend(zip(docno_batch, similarities.tolist()))
     results.sort(key=lambda x: x[1], reverse=True)
     all_results.append(results)
 
-with open("Results_GPU.txt", "w") as f:
+with open("Results_fast.txt", "w") as f:
     for i, results in enumerate(all_results):
         for rank, (docno, score) in enumerate(results[:1000]):
             f.write(f"{i+1} Q0 {docno} {rank+1} {score} run_name\n")
