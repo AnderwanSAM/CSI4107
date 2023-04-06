@@ -328,7 +328,7 @@ def main():
         queries=extract_query(query_files,i)
         all_queries[i]=queries
     
-    with open("./cached/queries1.json", "w") as file:
+    with open("./cached/queries.json", "w") as file:
         json.dump(all_queries, file)
     # load query files 
     with open("./cached/queries.json", "r") as f:
