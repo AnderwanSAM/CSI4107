@@ -31,3 +31,4 @@ tqdm==4.65.0
 transformers==4.27.3
 typing_extensions==4.5.0
 urllib3==1.26.15
+gensim==4.3.1
