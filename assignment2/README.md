@@ -55,17 +55,17 @@ The steps are simple:
 
 Here is a list of functions we used: 
 
-`read_file(file_name)` : takes in the folder path, opens the document file and reads the content into a string
-`merge_files(folder_path: str, output_file: str)`: takes in a folder path and an output file, writes all the collection of documents into 1 single output file 
-`read_initial_results(file_name)`: Reads the initial results from assignment1 and writes the dictionary for each query and its 1000 top documents in a json file 
-`extract_docs(file_content)`: takes the merged collection of documents, extracts what is between the `<TEXT>` tags and returns a dictionary for each document and its content
-`extract_query(query)`: takes the query, extracts the text, description and narration and returns a dictionary with the queryNo and their contents
-`embed_text(text_list, textNo)`: takes a list of text and a list of document numbers, use `SentenceTransformer('bert-base-nli-mean-tokens')` to encode the text and returns the embedded text
-`calculate_cosine_similarity(queries_embedded, docs_embedded, initial_results_dict)`: takes the embedded queries, the embedded documents and the initial results, perform the cosine similarity between each query and its 1000 top documents and returns the results 
-`write_to_file(results)` : takes the results for cosine similarity and writes the results in a json file
-`preprocessing()` : calls the necessary functions to perform the necessary preprocessing steps
-`get_embedding()` : calls the necessary functions to perform the document and query embeddings
-`main()`: calls the necessary functions to perform the preprocessing step, the embeddings, the cosine similarity and the ranking
+* `read_file(file_name)` : takes in the folder path, opens the document file and reads the content into a string
+* `merge_files(folder_path: str, output_file: str)`: takes in a folder path and an output file, writes all the collection of documents into 1 single output file 
+* `read_initial_results(file_name)`: Reads the initial results from assignment1 and writes the dictionary for each query and its 1000 top documents in a json file 
+* `extract_docs(file_content)`: takes the merged collection of documents, extracts what is between the `<TEXT>` tags and returns a dictionary for each document and its content
+* `extract_query(query)`: takes the query, extracts the text, description and narration and returns a dictionary with the queryNo and their contents
+* `embed_text(text_list, textNo)`: takes a list of text and a list of document numbers, use `SentenceTransformer('bert-base-nli-mean-tokens')` to encode the text and returns the embedded text
+* `calculate_cosine_similarity(queries_embedded, docs_embedded, initial_results_dict)`: takes the embedded queries, the embedded documents and the initial results, perform the cosine similarity between each query and its 1000 top documents and returns the results 
+* `write_to_file(results)` : takes the results for cosine similarity and writes the results in a json file
+* `preprocessing()` : calls the necessary functions to perform the necessary preprocessing steps
+* `get_embedding()` : calls the necessary functions to perform the document and query embeddings
+* `main()`: calls the necessary functions to perform the preprocessing step, the embeddings, the cosine similarity and the ranking
 
 ### Explanations of algorithms, data structures and optimization
 
