@@ -31,10 +31,76 @@ After 1 week, we met again to discuss our results and start writing the README f
 ## Approach 1 - Using 1000 initial results and BERT as pre-trained model
 
 ### Discussion and Evaluation
+
+Overall, the BERT for the 1000 initial results did not perform well with a MAP score of 0.1065 as compared to a MAP score of 0.2344 for the assignment1 using tf-idf. 
+The P@10 score is also bad (0.1760) instead of 0.3160 for the assignment1.
+
 ### How to run the programs 
+
+1. Change your directory to assignment2_Group20/bert_1000 using `cd assignment2_Group20/bert_1000`
+2. Run `py assignment2.py` to execute the code for the first approach using bert. 
+
+Note that you can also run the assignment 1 using `py assignment1.py` but this won't be necesssary. 
+Note that the program will take a long time to run (around 5 hours)
+
 ### Note about the functionality of programs 
+
+For this part of the assignment, the bert model is used using the `sentence-transformers` library to retrieve the text embeddings using the `bert-base-nli-mean-tokens` model. 
+
+The steps are simple: 
+1. Extract the content of the documents and queries 
+2. Find the the top 1000 documents for each queries for assignment 1
+3. Perform the documents and queries embeddings 
+4. Calculate the cosine similarities betweem each queries and their top 1000 documents 
+
+Here is a list of functions we used: 
+
+`read_file(file_name)` : takes in the folder path, opens the document file and reads the content into a string
+`merge_files(folder_path: str, output_file: str)`: takes in a folder path and an output file, writes all the collection of documents into 1 single output file 
+`read_initial_results(file_name)`: Reads the initial results from assignment1 and writes the dictionary for each query and its 1000 top documents in a json file 
+`extract_docs(file_content)`: takes the merged collection of documents, extracts what is between the `<TEXT>` tags and returns a dictionary for each document and its content
+`extract_query(query)`: takes the query, extracts the text, description and narration and returns a dictionary with the queryNo and their contents
+`embed_text(text_list, textNo)`: takes a list of text and a list of document numbers, use `SentenceTransformer('bert-base-nli-mean-tokens')` to encode the text and returns the embedded text
+`calculate_cosine_similarity(queries_embedded, docs_embedded, initial_results_dict)`: takes the embedded queries, the embedded documents and the initial results, perform the cosine similarity between each query and its 1000 top documents and returns the results 
+`write_to_file(results)` : takes the results for cosine similarity and writes the results in a json file
+`preprocessing()` : calls the necessary functions to perform the necessary preprocessing steps
+`get_embedding()` : calls the necessary functions to perform the document and query embeddings
+`main()`: calls the necessary functions to perform the preprocessing step, the embeddings, the cosine similarity and the ranking
+
 ### Explanations of algorithms, data structures and optimization
+
+We used a lot of dictionaries to store the document embeddings, the queries, the results etc... The process was basically the same as for the assignment1 except that instead of creating an inverted index and performing tf-idf, we used a pre-trained model (BERT) to get the documents and queries embeddings. We also used the `cosine_similarity` function from `sklearn` library to perform the cosine similarities between each queries and the top 1000 documents. When each step was performed, we stored the output in a json file so that we don't need to compute the same calculations again since the later take a long time to run.
+
 ### First 10 answers to query 3 and 20 
+
+1. First 10 answers to query 3 
+
+```
+3 Q0 AP880609-0025 1 0.6269417364446677 run_name
+3 Q0 AP880701-0160 2 0.6140284338319623 run_name
+3 Q0 AP880323-0266 3 0.6093979559896181 run_name
+3 Q0 AP880526-0030 4 0.6051036775574417 run_name
+3 Q0 AP880611-0155 5 0.5876424453701999 run_name
+3 Q0 AP880603-0052 6 0.586848382135898 run_name
+3 Q0 AP880912-0265 7 0.564501963007642 run_name
+3 Q0 AP881230-0216 8 0.5626991552721342 run_name
+3 Q0 AP880315-0044 9 0.5561108109415263 run_name
+3 Q0 AP880824-0307 10 0.5522810870207969 run_name
+```
+2. First 10 answers to query 20
+
+```
+20 Q0 AP880527-0290 1 0.8006464179912717 run_name
+20 Q0 AP880527-0264 2 0.8006464179912717 run_name
+20 Q0 AP880408-0032 3 0.7927027083012725 run_name
+20 Q0 AP880627-0239 4 0.7833998178654293 run_name
+20 Q0 AP881022-0012 5 0.7789878053604482 run_name
+20 Q0 AP880527-0210 6 0.7777016965147658 run_name
+20 Q0 AP880323-0094 7 0.7664421268819205 run_name
+20 Q0 AP881006-0172 8 0.7663772636057145 run_name
+20 Q0 AP881110-0035 9 0.7652186444071198 run_name
+20 Q0 AP880907-0172 10 0.7630886303565136 run_name
+```
 
 ## Approach 2 - Query expansion using pre-trained word embeddings 
 
