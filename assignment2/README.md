@@ -105,7 +105,13 @@ We used a lot of dictionaries to store the document embeddings, the queries, the
 ## Approach 2 - Query expansion using pre-trained word embeddings 
 
 ### Discussion and Evaluation 
-TODO
+
+In this approach, we decided to expand the queries using pre-trained models. We tried Word2Vec, Glove(50,100,200,300) and fasttext on both unstemmed and stemmed components (inverted index,queries). 
+FastText with unstemmed elements gave us the best results for this approach . 
+The map went from 0.23 (A1) to 0.2495 and the num_rel_retrieved_docs = num_rel_documents according to trec_eval.
+Overall the improvement was less than expected. 
+
+
 ### How to run the programs 
 
 1. Change your directory to assignment2_Group20/fastText using `cd assignment2_Group20/fastText`
