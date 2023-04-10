@@ -227,15 +227,50 @@ This way, the program does not have to recalculate them since they take a lot of
 20 Q0 AP880616-0020 10 0.17765448773837195 testTag
 ```
 
-## Approach 3- Using BERT from the beginning 
+## Approach 3- Using Longformer from the beginning 
 
 ### Discussion and Evaluation 
+In this approach, we first tried BERT but then realized that BERT cannot take in documents longer than 512 words. Going around this limit while still using regular BERT would either require us to cut out the document at 512 tokens which would result in information loss, or break the document into chunks and process them one chunk at a time but this would be tedious. We instead settled on usin a BERT-like model called [Longformer](https://huggingface.co/docs/transformers/model_doc/longformer) which allows up to 4,096 tokens.
+
 ### How to run the programs 
+1. Change your directory to `assignment2_Group20/Longformer`
+3. Run `py longformer.py`
+
 ### Note about the functionality of programs 
+
+The program is fairly simple:
+1. Merge all the documents into a single file
+2. Extract the content of the documents
+3. Tokenize all the documents
+4. Calculate the embeddings for all documents
+5. For each query
+    * Extract the contents of the title and description 
+    * Tokenize the query
+    * Calculate the embeddings of the query
+    * Calculate the cosine similarities betweem each queries and all the documents 
+6. Output the results in `Results.txt` 
+
+Here is a list of functions we used: 
+
+* `extract_query_desc_title(query)` : extracts description and title from a query file
+* `merge_files(folder_path: str, output_file: str)`: takes in a folder path and an output file name, merges all the documents into a single output file 
+* `extract_docs(file_content)`: takes the merged collection of documents, extracts the text from documents and their corresponding docnos
+* `extract_query_desc_title(query)`: takes the query, extracts the text and description and returns a sentence with the title and description joined by a `.`
+* `tokenize(text, tokenizer, max_length=4096)`: takes in any text and returns the tokenized text
+* `convert_tokens_to_embeddings(tokenized_text, model)` : takes in the tokenized text and calculated the embeddings
+* `calculate_cosine_similarity(query_embedding, doc_embeddings)`: takes the query embedding of a query and the document embedding, and calcultes the cosine similarity between the query and all the documents.
+* `main()`: calls the necessary functions to extract the documents and queries, tokenize the text, calculate the embeddings, calculate the cosine similarity between the queries and documents and printing them in the `Results.txt` file.
+
 ### Explanations of algorithms, data structures and optimization
+
+We used a lot of dictionaries to store the document embeddings, the queries, the results etc... The process was basically the same as for the assignment1 except that instead of creating an inverted index and performing tf-idf, we used a pre-trained model (BERT) to get the documents and queries embeddings. We also used the `cosine_similarity` function from `sklearn` library to perform the cosine similarities between each queries and the top 1000 documents. When each step was performed, we stored the output in a json file so that we don't need to compute the same calculations again since the later take a long time to run.
+
+We merged all the documents into a file called `corpus.txt` avoid reading each file one by one. The pytorch function [torch.nn.CosineSimilarity()](https://pytorch.org/docs/stable/generated/torch.nn.CosineSimilarity.html) was used as it allows calculations to be performed on the GPU rather than CPU decreasing computation time.
+
 ### First 10 answers to query 3 and 20 
 
 ## Conclusion
 
 
 ## References 
+* PyTorch Documentation: https://pytorch.org/docs/
