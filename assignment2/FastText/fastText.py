@@ -47,7 +47,7 @@ def process_files (files):
     return return_value
 
 def remove_stopwords(tokens): 
-    with open("stopwords") as f:
+    with open("../stopwords") as f:
         stopwords= f.readlines()
     stopwords = [x.strip() for x in stopwords]
     final_tokens = []
@@ -273,9 +273,9 @@ def main():
     
     print("--------STEP 1 : Preprocessing: STARTING ----------")
 
-    get_all_files_tokens("./coll")
+    get_all_files_tokens("../coll")
 
-    files_names = get_files_names("./coll")
+    files_names = get_files_names("../coll")
 
     print("--------STEP 1 : Preprocessing: DONE ----------")
 
@@ -322,7 +322,9 @@ def main():
     print("-------- Calculate document length : DONE ----------")
     print("-------- Load query files : STARTING ----------")
     # Read test queries from file 
-    query_files = read_file("queries")
+    with open("../queries") as f:
+        query_files = f.read()
+        
     all_queries={}
     for i in tqdm(range(0, 50)):
         queries=extract_query(query_files,i)

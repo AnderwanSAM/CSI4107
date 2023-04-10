@@ -91,8 +91,15 @@ def write_to_file(results):
                 
 def preprocessing():
     
-    file_content = read_file('./cached/AP_merged')
-    queries = read_file("./cached/queries")
+    if not os.path.exists("corpus.txt"):
+        # Merges all documents from `coll` folder into a single file
+        merge_files("../coll", "corpus.txt")
+
+    with open("corpus.txt") as f:
+        file_content= f.read()
+    
+    with open("../queries") as f:
+        queries = f.read()
     
     # Extract queries and documents 
     doc_dict = extract_docs(file_content)

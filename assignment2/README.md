@@ -108,8 +108,7 @@ We used a lot of dictionaries to store the document embeddings, the queries, the
 
 In this approach, we decided to expand the queries using pre-trained models. We tried Word2Vec, Glove(50,100,200,300) and fasttext on both unstemmed and stemmed components (inverted index,queries). 
 FastText with unstemmed elements gave us the best results for this approach . 
-The map went from 0.23 (A1) to 0.2495 and the num_rel_retrieved_docs = num_rel_documents according to trec_eval.
-Overall the improvement was less than expected. 
+The MAP score went from 0.23 (Aassignment 1) to 0.2495, the p@10 is 0.3340 compared to 0.3160 for the assignment1 and the num_rel_retrieved_docs = num_rel_documents according to trec_eval. Overall the improvement was less than expected but still better than assignment1.
 
 
 ### How to run the programs 
@@ -263,14 +262,24 @@ Here is a list of functions we used:
 
 ### Explanations of algorithms, data structures and optimization
 
-We used a lot of dictionaries to store the document embeddings, the queries, the results etc... The process was basically the same as for the assignment1 except that instead of creating an inverted index and performing tf-idf, we used a pre-trained model (BERT) to get the documents and queries embeddings. We also used the `cosine_similarity` function from `sklearn` library to perform the cosine similarities between each queries and the top 1000 documents. When each step was performed, we stored the output in a json file so that we don't need to compute the same calculations again since the later take a long time to run.
-
 We merged all the documents into a file called `corpus.txt` avoid reading each file one by one. The pytorch function [torch.nn.CosineSimilarity()](https://pytorch.org/docs/stable/generated/torch.nn.CosineSimilarity.html) was used as it allows calculations to be performed on the GPU rather than CPU decreasing computation time.
 
 ### First 10 answers to query 3 and 20 
 
 ## Conclusion
 
+| Approach | MAP  | p@10   |
+|----------|------|--------|
+|1         |0.1065| 0.1760 |
+|2         |0.2495| 0.3340 |
+|3         |      |        |
+
 
 ## References 
+
 * PyTorch Documentation: https://pytorch.org/docs/
+* BERT huggingface : https://huggingface.co/docs/transformers/model_doc/bert 
+* Longformer huggingFace: https://huggingface.co/docs/transformers/model_doc/longformer 
+* Removing duplicate words : https://www.w3schools.com/python/python_howto_remove_duplicates.asp 
+* chatGPT : https://chat.openai.com/chat
+* gensim downloader: https://radimrehurek.com/gensim/downloader.html

@@ -1,4 +1,5 @@
 *.json
+*.txt
 assignment2/env
 assignment2/bert_1000/cached
 assignment2/Longformer/corpus.txt
